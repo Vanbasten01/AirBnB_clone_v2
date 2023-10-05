@@ -14,6 +14,7 @@ env.key_filename = '~/.ssh/id_rsa'
 
 def do_pack():
     """Create a compressed archive of the web_static folder.
+
     Returns:
         str: The name of the created archive file,
         or None if the operation fails.
@@ -25,15 +26,17 @@ def do_pack():
                 now.year, now.month, now.day, now.hour,
                 now.minute, now.second)
         local("tar -czvf versions/{} web_static".format(archive_name))
-        return archive_name
+        return "versions/{}".format(archive_name)
     except Exception:
         return None
 
 
 def do_deploy(archive_path):
     """Distribute an archive to web servers.
+
     Args:
         archive_path (str): The path to the archive file to be deployed.
+
     Returns:
         bool: True if the deployment succeeds, False otherwise.
     """
@@ -56,5 +59,6 @@ def do_deploy(archive_path):
         # create a new symbolic link
         run("sudo ln -sf {} /data/web_static/current".format(release_path))
         return True
-    except Exception:
+    except Exception as e:
+        print(e)
         return False
