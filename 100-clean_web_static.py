@@ -82,10 +82,12 @@ def do_clean(number=0):
     """ do_clean function """
     number = int(number)
     if number == 0:
-        number = 2
-    else:
-        number = number + 1
+        number = 1
 
-    local("cd versions && ls -t | tail -n + {} | xargs rm -rf".format(number))
-    path = "/data/web_static/releases"
-    run("cd {} && ls -t | tail -n + {} | xargs rm -rf".format(path, number))
+    total_archives = local('ls -tl | grep -v '^total' | wc -l', capture=True)
+    archives_to_delete = int(total_archives) - number
+
+    if archives_to_delete > 0:
+        local("cd versions && ls -t | tail -n + {} | xargs rm -rf".format(archives_to_delete))
+        path = "/data/web_static/releases"
+        run("cd {} && ls -t | tail -n + {} | xargs rm -rf".format(path, archives_to_delete))
