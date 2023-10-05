@@ -6,6 +6,7 @@
 from os.path import exists, isfile
 from datetime import datetime
 from fabric.api import local, run, put, env
+import subprocess
 
 env.hosts = ['18.206.207.65', '54.90.18.138']
 env.user = 'ubuntu'
@@ -79,15 +80,15 @@ def deploy():
 
 
 def do_clean(number=0):
-    """ do_clean function """
+    """
+    Deletes old versions
+
+    Args:
+        number (int): Number of versions to keep (default is 0).
+    """
     number = int(number)
     if number == 0:
         number = 1
-
-    total_archives = local('ls -tl | grep -v '^total' | wc -l', capture=True)
-    archives_to_delete = int(total_archives) - number
-
-    if archives_to_delete > 0:
-        local("cd versions && ls -t | tail -n + {} | xargs rm -rf".format(archives_to_delete))
-        path = "/data/web_static/releases"
-        run("cd {} && ls -t | tail -n + {} | xargs rm -rf".format(path, archives_to_delete))
+    local("cd versions && ls -t | head -n -{} | xargs rm -rf".format(number))
+    path = "/data/web_static/releases"
+    run("cd {} ; ls -t | head -n -{} | xargs rm -fr".format(path, number))
