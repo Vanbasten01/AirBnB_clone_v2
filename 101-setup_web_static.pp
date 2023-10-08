@@ -44,6 +44,11 @@ file { '/etc/nginx/sites-enabled/default':
   target => '/etc/nginx/sites-available/default',
 }
 
+# configure Nginx to serve static files from /data/web_static/current
+exec { 'add_lines':
+  command  => 'sudo sed -i "s|server_name _;|server_name _;\n\n\tlocation /hbnb_static {\n\t\talias /data/web_static/current/;\n\t}|" /etc/nginx/sites-enabled/default',
+  provider => shell,
+}
 # ensure Nginx service is running
 service { 'nginx':
   ensure => 'running',
