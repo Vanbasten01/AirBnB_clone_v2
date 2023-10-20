@@ -1,5 +1,5 @@
 #!/usr/bin/pyhton3
-# a script that starts a flask application.
+""" a script that starts a flask application."""
 from flask import Flask, render_template
 from models import storage
 from models.state import State
