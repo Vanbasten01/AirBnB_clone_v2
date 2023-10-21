@@ -1,27 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-		<title>HBNB</title>
-	</head>
-	<body>
-
+<HTML lang="en">
+	<HEAD>
+		<TITLE>HBNB</TITLE>
+	</HEAD>
+	<BODY>
 		{% if cities is none and state is none %}
-		<h1>Not found!</h1>
+		<H1>Not found!</H1>
 		{% elif state %}
-		<h1>State: {{ state.name}}</h1>
+		<H1>State: {{ state.name}}</H1>
 		<H3>Cities:</H3>
 		<UL>
 			{% for city in cities %}
-			<li>{{ city.id }}: <b>{{ city.name }}</b></li>
+			<LI>{{ city.id }}: <B>{{ city.name }}</B></LI>
 			{% endfor %}
 		</UL>
 		{% else %}
-		<h1>States<h1>
-		<ul>
+		<H1>States</H1>
+		<UL>
 		{% for state in states %}
-			<li>{{ state.id }}: <b>{{ state.name }}</b></li>
+			<LI>{{ state.id }}: <B>{{ state.name }}</B></LI>
 		{% endfor %}
 		</UL>
 		{% endif %}
-	</body>
-</html>
+	</BODY>
+</HTML>
