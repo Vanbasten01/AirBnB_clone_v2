@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#/usr/bin/python3
 """ """
 from flask import Flask, render_template
 from models import storage
@@ -21,6 +21,7 @@ def filters():
 
 @app.teardown_appcontext
 def teardowndb(exception):
+    """it ends the sqlalchemy session"""
     storage.close()
 
 if __name__ == "__main__":
